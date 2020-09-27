@@ -62,7 +62,7 @@
       </div>
       <!-- $event是传过来的值 -->
       <!-- <SpuForm v-show="isShowSpuForm" :visible="isShowSpuForm" @update:visible="isShowSpuForm = $event"></SpuForm> -->
-      <SpuForm v-show="isShowSpuForm" :visible.sync="isShowSpuForm"></SpuForm>
+      <SpuForm v-show="isShowSpuForm" :visible.sync="isShowSpuForm" ref="spu"></SpuForm>
 
       <SkuForm v-show="isShowSkuForm"></SkuForm>
 
@@ -103,16 +103,23 @@ export default {
 
 
     //点击添加sku按钮逻辑
-    showAddSkuForm(row){
+    showAddSkuForm(){
       this.isShowSkuForm = true
+      
     },
     // 点击修改spu按钮逻辑
     showUpdateSpuForm(row){
       this.isShowSpuForm = true
+      // 在父组件里使用ref获取子组件对象来操作数据,这里在父组件中调用子组件中的函数
+      this.$refs.spu.initUpdateSpuFormData(row)
+      // // 初始化页面数据发请求
     },
     //点击添加spu按钮逻辑
-    showAddSpuForm(){
+    showAddSpuForm(row){
       this.isShowSpuForm = true
+      // 在父组件里使用ref获取子组件对象来操作数据,这里在父组件中调用子组件中的函数
+      this.$refs.spu.initAddSpuFormData(row)
+      //  // 初始化页面数据发请求
     },
 
     handlerCategory({ categoryId, level }) {
